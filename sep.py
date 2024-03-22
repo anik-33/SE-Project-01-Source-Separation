@@ -8,5 +8,5 @@ def separate_vocals(file_path):
     except subprocess.CalledProcessError as e:
         print(f"An error occured While running demucs: {e}")
 if __name__ == "__main__":
-    file_path = ""C:\Users\ASUS\Music\perfect.mp3" "
+    file_path = "song_with_bg.wav"
     separate_vocals(file_path)
