@@ -1,5 +1,3 @@
-# for local run: Streamlit run app.py
-
 import streamlit as st
 import os
 import subprocess
@@ -16,7 +14,7 @@ def save_uploaded_file(uploaded_file):
 # Function to process audio file with demucs
 def process_audio_with_demucs(audio_file_path):
     try:
-        subprocess.run(['demucs', audio_file_path], check=True)
+        subprocess.run(['demucs',"--mp3", audio_file_path], check=True)
         return True
     except subprocess.CalledProcessError as e:
         st.error(f"Error executing demucs command: {e}")
@@ -49,12 +47,12 @@ if uploaded_file is not None:
 
         with col2:
             st.markdown("### Processed Audio (Demucs)")
-            if st.button("Start Processing"):
+            if st.button("Process Audio with Demucs"):
                 if process_audio_with_demucs(audio_file_path):
-                    processed_audio_file_path = os.path.join("separated", "htdemucs", os.path.splitext(uploaded_file.name)[0], "vocals.wav")
+                    processed_audio_file_path = os.path.join("separated", "htdemucs", os.path.splitext(uploaded_file.name)[0], "vocals.mp3")
                     if os.path.exists(processed_audio_file_path):
                         processed_audio_bytes = open(processed_audio_file_path, "rb").read()
-                        st.audio(processed_audio_bytes, format='audio/wav', start_time=0)
+                        st.audio(processed_audio_bytes, format='audio/mp3', start_time=0)
                     else:
                         st.error("Processed audio file not found.")
                 else:
